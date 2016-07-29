@@ -1,0 +1,9 @@
+{
+  "entrypoint": "index.html",
+  "shell": "src/ds-app.html",
+  "fragments": [
+    "src/ds-view1.html",
+    "src/ds-view2.html",
+    "src/ds-view3.html"
+  ]
+}
