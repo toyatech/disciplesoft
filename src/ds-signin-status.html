@@ -1,0 +1,86 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../bower_components/google-signin/google-signin.html">
+<link rel="import" href="../bower_components/google-signin/google-signin-aware.html">
+<link rel="import" href="../bower_components/google-apis/google-client-loader.html">
+
+<dom-module id="ds-signin-status">
+
+  <template>
+    <style>
+      :host {
+        display: inline-block;
+      }
+    </style>
+
+    <google-client-loader 
+      id="plus" 
+      name="plus" 
+      version="v1" 
+      on-google-api-load="{{getProfile}}"></google-client-loader>
+    <google-sigin-aware 
+      scopes="profile" 
+      on-google-signin-aware-success="{{signIn}}" 
+      on-google-signin-aware-failure="{{signOut}}"
+      on-google-signin-aware-signed-out="{{signOut}}"></google-signin-aware>
+    
+    <div>
+      <template if="{{signedIn}}">
+        <paper-dropdown-menu label="{{profile.displayName}}">
+        </paper-dropdown-menu>
+      </template>
+    </div>
+ 
+    <google-signin
+      client-id="845340661473-akm93u9c0p05eu49icq5ttrtsrn14rsd.apps.googleusercontent.com"
+      scopes="profile email"></google-signin>
+
+  </template>
+
+  <script>
+
+    Polymer({
+
+      is: 'ds-signin-status',
+
+      properties: {
+        signedIn: {
+          type: Boolean,
+          value: false
+        }
+      },
+
+      signIn: function() {
+        this.signedIn = true;
+        this.getProfile();
+      },
+
+      signOut: function() {
+        this.profile = null;
+        this.signedIn = false;
+      },
+
+      getProfile: function() {
+        if (this.signedIn && this.$.plus.api) {
+          var request = this.$.plus.api.people.get({"userId": "me"});
+          request.execute(function(response) {
+            this.profile = response;
+          }.bind(this));
+        }
+      }
+
+    });
+
+  </script>
+
+</dom-module>
