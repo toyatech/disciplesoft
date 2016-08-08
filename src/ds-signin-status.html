@@ -9,7 +9,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../bower_components/paper-menu-button/paper-menu-button.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/google-signin/google-signin.html">
 <link rel="import" href="../bower_components/google-signin/google-signin-aware.html">
 <link rel="import" href="../bower_components/google-apis/google-client-loader.html">
@@ -17,33 +21,35 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <dom-module id="ds-signin-status">
 
   <template>
-    <style>
+    <!--style>
       :host {
         display: inline-block;
       }
-    </style>
+    </style-->
 
-    <google-client-loader 
-      id="plus" 
-      name="plus" 
-      version="v1" 
-      on-google-api-load="{{getProfile}}"></google-client-loader>
-    <google-sigin-aware 
-      scopes="profile" 
-      on-google-signin-aware-success="{{signIn}}" 
-      on-google-signin-aware-failure="{{signOut}}"
-      on-google-signin-aware-signed-out="{{signOut}}"></google-signin-aware>
+    <google-signin-aware 
+      scopes=" " 
+      on-google-signin-aware-success="signIn" 
+      on-google-signin-aware-failure="signOut"
+      on-google-signin-aware-signed-out="signOut"></google-signin-aware>
     
-    <div>
-      <template if="{{signedIn}}">
-        <paper-dropdown-menu label="{{profile.displayName}}">
-        </paper-dropdown-menu>
-      </template>
-    </div>
+      <!--template if="{{signedIn}}"-->
+        <paper-menu-button>
+          <paper-icon-button 
+            icon="arrow-drop-down"
+            toggle="arrow-drop-up"
+            class="dropdown-trigger"></paper-icon-button>
+          <paper-menu class="dropdown-content">
+            <paper-item>Edit Profile</paper-item>
+            <paper-item>Preferences</paper-item>
+            <paper-item>Sign Out</paper-item>
+          </paper-menu>
+        </paper-menu-button>
+      <!--/template-->
  
     <google-signin
       client-id="845340661473-akm93u9c0p05eu49icq5ttrtsrn14rsd.apps.googleusercontent.com"
-      scopes="profile email"></google-signin>
+      scopes=" "></google-signin>
 
   </template>
 
@@ -62,21 +68,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       signIn: function() {
         this.signedIn = true;
-        this.getProfile();
+        this.getUser();
       },
 
       signOut: function() {
-        this.profile = null;
+        this.user = null;
         this.signedIn = false;
       },
 
-      getProfile: function() {
-        if (this.signedIn && this.$.plus.api) {
-          var request = this.$.plus.api.people.get({"userId": "me"});
-          request.execute(function(response) {
-            this.profile = response;
-          }.bind(this));
-        }
+      getUser: function() {
+        var user = gapi.auth2.getAuthInstance()['currentUser'].get();
+        console.log(user.getBasicProfile().getName());
+        //if (this.signedIn && this.$.directory.api) {
+        //  var request = this.$.directory.api.users.get({"userKey": "dlittle@laytonavenuechurch.org"});
+        //  request.execute(function(response) {
+        //    if (response.error) {
+        //      console.error("Error with people.get", response.message);
+        //    } else {
+        //      this.user = response;
+        //      console.log(response);
+        //    }
+        //  }.bind(this));
+        //}
       }
 
     });
