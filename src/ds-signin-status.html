@@ -21,36 +21,59 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <dom-module id="ds-signin-status">
 
   <template>
-    <!--style>
+    <style>
       :host {
         display: inline-block;
       }
-    </style-->
+
+      .dropdown-trigger span {
+        color: #9ca5af;
+        margin: 0 10px;
+      }
+
+      .dropdown-trigger iron-icon {
+        color: #9ca5af;
+      }
+    </style>
+
+    <google-client-loader 
+      id="plus"
+      name="plus"
+      version="v1"
+      on-js-api-load="displayProfile">
 
     <google-signin-aware 
-      scopes=" " 
+      scopes="profile"
       on-google-signin-aware-success="signIn" 
       on-google-signin-aware-failure="signOut"
       on-google-signin-aware-signed-out="signOut"></google-signin-aware>
     
-      <!--template if="{{signedIn}}"-->
-        <paper-menu-button>
-          <paper-icon-button 
-            icon="arrow-drop-down"
-            toggle="arrow-drop-up"
-            class="dropdown-trigger"></paper-icon-button>
+      <template is="dom-if" if="{{signedIn}}">
+        <img src="{{profile.image.url}}"></a>
+        <paper-menu-button vertical-offset="35">
+          <paper-button class="dropdown-trigger">
+            <span>{{profile.displayName}}</span>
+            <iron-icon icon="arrow-drop-down"></iron-icon>
+          </paper-button>
           <paper-menu class="dropdown-content">
             <paper-item>Edit Profile</paper-item>
             <paper-item>Preferences</paper-item>
-            <paper-item>Sign Out</paper-item>
+            <paper-item>
+              <google-signin
+                scopes="profile"
+                client-id="845340661473-akm93u9c0p05eu49icq5ttrtsrn14rsd.apps.googleusercontent.com">
+              </google-signin>
+            </paper-item>
           </paper-menu>
         </paper-menu-button>
-      <!--/template-->
- 
-    <google-signin
-      client-id="845340661473-akm93u9c0p05eu49icq5ttrtsrn14rsd.apps.googleusercontent.com"
-      scopes=" "></google-signin>
-
+      </template>
+      <template is="dom-if" if="{{!signedIn}}">
+        <google-signin
+          scopes="profile"
+          client-id="845340661473-akm93u9c0p05eu49icq5ttrtsrn14rsd.apps.googleusercontent.com">
+        </google-signin>
+      </template>
+       
   </template>
 
   <script>
@@ -68,7 +91,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       signIn: function() {
         this.signedIn = true;
-        this.getUser();
+        this.displayProfile;
       },
 
       signOut: function() {
@@ -76,20 +99,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.signedIn = false;
       },
 
-      getUser: function() {
-        var user = gapi.auth2.getAuthInstance()['currentUser'].get();
-        console.log(user.getBasicProfile().getName());
-        //if (this.signedIn && this.$.directory.api) {
-        //  var request = this.$.directory.api.users.get({"userKey": "dlittle@laytonavenuechurch.org"});
-        //  request.execute(function(response) {
-        //    if (response.error) {
-        //      console.error("Error with people.get", response.message);
-        //    } else {
-        //      this.user = response;
-        //      console.log(response);
-        //    }
-        //  }.bind(this));
-        //}
+      displayProfile: function() {
+        if (this.signedIn && this.$.plus.api) {
+          var request = this.$.plus.api.people.get({"userId": "me"});
+          request.execute(function(response) {
+            console.log(response);
+            this.profile = response;
+          }.bind(this));
+          //this.user = gapi.auth2.getAuthInstance()['currentUser'].get().getBasicProfile().getName();
+        }
       }
 
     });
