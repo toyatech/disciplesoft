@@ -40,7 +40,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       id="plus"
       name="plus"
       version="v1"
-      on-js-api-load="displayProfile">
+      on-js-api-load="displayProfile"></google-client-loader>
 
     <google-signin-aware 
       scopes="profile"
@@ -70,6 +70,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <template is="dom-if" if="{{!signedIn}}">
         <google-signin
           scopes="profile"
+          hosted-domain="laytonavenuechurch.org"
           client-id="845340661473-akm93u9c0p05eu49icq5ttrtsrn14rsd.apps.googleusercontent.com">
         </google-signin>
       </template>
@@ -106,7 +107,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             console.log(response);
             this.profile = response;
           }.bind(this));
-          //this.user = gapi.auth2.getAuthInstance()['currentUser'].get().getBasicProfile().getName();
+          this.user = gapi.auth2.getAuthInstance()['currentUser'].get().getBasicProfile().getName();
         }
       }
 

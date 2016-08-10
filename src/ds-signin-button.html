@@ -1,0 +1,59 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/google-signin/google-signin.html">
+
+<dom-module id="ds-signin-button">
+  <template>
+
+    <style>
+      :host {
+        display: inline-block;
+      }
+      google-signin {
+        display: none;
+      }
+    </style>
+    <google-signin></google-signin>
+
+    <template is="dom-if" if="{{ !signedIn }}">
+    </template>
+
+    <template is="dom-if" if="{{ signedIn }}">
+    </template>
+
+  </template>
+
+  <script>
+    Polymer({
+      is: 'ds-signin-button',
+      properties: {
+        clientId: {
+          type: String,
+          value: ''
+        },
+        scopes: {
+          type: String,
+          value: ''
+        },
+        hostedDomain: {
+          type: String,
+          value: ''
+        },
+        cookiePolicy: 'single_host_origin',
+        signedIn: false,
+      },
+      _signInSuccess: function() {
+        this.signedIn = true;
+      },
+      _signOutSuccess: function() {
+        this.signedIn = false;
+      },
+      _signIn: function() {
+        this.$.signinElement.signIn();
+      },
+      _signOut: function() {
+        this.$.signinElement.signOut();
+      }
+    });
+  </script>
+
+</dom-module>
