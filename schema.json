@@ -1,19 +1,128 @@
 {
+  "title": "DiscipleSoft",
+  "description": "App to help churches make disciples.",
   "definitions": {
+    "Association": {
+      "title": "Association",
+      "description": "An association of churches (i.e convention, diocese, parish, conference, etc...)."
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "address": {
+          "$ref": "#/definitions/PostalAddress"
+        },
+        "associations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Association"
+          }
+        },
+        "churches": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Church"
+          }
+        }
+      },
+      "required": [ "name" ]
+    },
     "Church": {
-      "type": "object"
+      "title": "Church",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "address": {
+          "$ref": "#/definitions/PostalAddress"
+        },
+        "families": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Family"
+          }
+        },
+        "people": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Person"
+          }
+        }
+      }
     },
     "Family": {
-      "type": "object"
+      "title": "Family",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "address": {
+          "$ref": "#/definitions/PostalAddress"
+        },
+        "members": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FamilyMember"
+          }
+        }
+      }
+    },
+    "FamilyMember": {
+      "title": "FamilyMember",
+      "type": "object",
+      "properties": {
+        "person": {
+          "$ref": "#/definitions/Person"
+        },
+        "role": {
+          "$ref": "#/definitions/FamilyRole"
+        }
+      }
     },
     "Person": {
-      "type": "object"
+      "title": "Person",
+      "type": "object",
+      "properties": {
+      }
     },
     "Group": {
-      "type": "object"
+      "title": "Group",
+      "type": "object",
+      "properties": {
+      }
     },
     "Event": {
-      "type": "object"
+      "title": "Event",
+      "type": "object",
+      "properties": {
+      }
+    },
+    "PostalAddress": {
+      "title": "PostalAddress",
+      "type": "object",
+      "properties": {
+      }
+    },
+    "NamedType": {
+      "title": "NamedType",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
     }
   },
   "type": "object",
