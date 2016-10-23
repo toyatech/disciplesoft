@@ -4,7 +4,7 @@
   "definitions": {
     "Association": {
       "title": "Association",
-      "description": "An association of churches (i.e convention, diocese, parish, conference, etc...)."
+      "description": "An association of churches (i.e convention, diocese, parish, conference, etc...).",
       "type": "object",
       "properties": {
         "name": {
@@ -98,6 +98,34 @@
       "title": "Group",
       "type": "object",
       "properties": {
+        "name": {
+          "type": "string"
+        },
+        "members": {
+          "type": "array",
+          "items": "#/definitions/GroupMember"
+        }
+      }
+    },
+    "GroupRole": {
+      "title": "GroupRole",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/NamedType"
+        }
+      ]
+    },
+    "GroupMember": {
+      "title": "GroupMember",
+      "type": "object",
+      "properties": {
+        "person": {
+          "$ref": "#/definitions/DBRef
+        },
+        "role": {
+          "$ref": "#/definitions/GroupRole"
+        }
       }
     },
     "Event": {
@@ -120,6 +148,20 @@
           "type": "string"
         },
         "description": {
+          "type": "string"
+        }
+      }
+    },
+    "DBRef": {
+      "type": "object",
+      "properties": {
+        "$ref": {
+          "type": "string"
+        },
+        "$id": {
+          "type": "string"
+        },
+        "$db": {
           "type": "string"
         }
       }
