@@ -1,0 +1,22 @@
+{
+  "definitions": {
+    "Church": {
+      "type": "object"
+    },
+    "Family": {
+      "type": "object"
+    },
+    "Person": {
+      "type": "object"
+    },
+    "Group": {
+      "type": "object"
+    },
+    "Event": {
+      "type": "object"
+    }
+  },
+  "type": "object",
+  "properties": {
+  }
+}
