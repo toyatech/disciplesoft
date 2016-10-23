@@ -121,7 +121,7 @@
       "type": "object",
       "properties": {
         "person": {
-          "$ref": "#/definitions/DBRef
+          "$ref": "#/definitions/DBRef"
         },
         "role": {
           "$ref": "#/definitions/GroupRole"
