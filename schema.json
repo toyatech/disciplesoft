@@ -152,6 +152,17 @@
         }
       }
     },
+    "Ref": {
+      "type": "object",
+      "properties": {
+        "$id": {
+          "type": "string"
+        },
+        "$query": {
+          "type": "string"
+        }
+      }
+    },
     "DBRef": {
       "type": "object",
       "properties": {
