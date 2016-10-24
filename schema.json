@@ -7,6 +7,10 @@
       "description": "An association of churches (i.e convention, diocese, parish, conference, etc...).",
       "type": "object",
       "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
         "name": {
           "type": "string"
         },
@@ -29,7 +33,41 @@
           }
         }
       },
-      "required": [ "name" ]
+      "required": [ 
+        "name" 
+      ],
+      "links": [
+        {
+          "description": "Retrieves a list of associations.",
+          "href": "/associations",
+          "method": "GET"
+        },
+        {
+          "description": "Retrieves a specific association.",
+          "href": "/associations/{associationId}",
+          "method": "GET"
+        },
+        {
+          "description": "Creates a new association.",
+          "href": "/associations",
+          "method": "POST"
+        },
+        {
+          "description": "Updates a specific association.",
+          "href": "/associations/{associationId}",
+          "method": "PUT"
+        },
+        {
+          "description": "Modify a specific association.",
+          "href": "/associations/{associationId}",
+          "method": "PATCH"
+        },
+        {
+          "description": "Remove a specific association.",
+          "href": "/associations/{associationId}",
+          "method": "DELETE"
+        }
+      ]
     },
     "Church": {
       "title": "Church",
@@ -56,7 +94,40 @@
             "$ref": "#/definitions/Person"
           }
         }
-      }
+      },
+      ,
+      "links": [
+        {
+          "description": "Retrieves a list of church.",
+          "href": "/churches",
+          "method": "GET"
+        },
+        {
+          "description": "Retrieves a specific church.",
+          "href": "/churches/{churchId}",
+          "method": "GET"
+        },
+        {
+          "description": "Creates a new church.",
+          "href": "/churches",
+          "method": "POST"
+        },
+        {
+          "description": "Updates a specific church.",
+          "href": "/churches/{churchId}",
+          "method": "PUT"
+        },
+        {
+          "description": "Modify a specific church.",
+          "href": "/churches/{churchId}",
+          "method": "PATCH"
+        },
+        {
+          "description": "Remove a specific church.",
+          "href": "/churches/{churchId}",
+          "method": "DELETE"
+        }
+      ]
     },
     "Family": {
       "title": "Family",
