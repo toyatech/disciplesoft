@@ -82,6 +82,8 @@
         "address": {
           "$ref": "#/definitions/PostalAddress"
         },
+        "association": {
+        },
         "families": {
           "type": "array",
           "items": {
