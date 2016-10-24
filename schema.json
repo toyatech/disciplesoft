@@ -95,7 +95,6 @@
           }
         }
       },
-      ,
       "links": [
         {
           "description": "Retrieves a list of church.",
