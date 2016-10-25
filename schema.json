@@ -66,8 +66,31 @@
           "description": "Remove a specific association.",
           "href": "/associations/{associationId}",
           "method": "DELETE"
+        },
+        {
+          "rel": "associations",
+          "description": "Retrieves a list sub-associations.",
+          "href": "/associations?associations={associationId}",
+          "method": "GET"
+        },
+        {
+          "rel": "churches",
+          "description": "Retrieves a list of associated churches.",
+          "href": "/churches?
         }
       ]
+    },
+    "MemberAssociation": {
+      "title": "MemberAssociation",
+      "type": "object",
+      "properties": {
+      }
+    },
+    "MemberChurch": {
+      "title": "MemberChurch",
+      "type": "object",
+      "properties": {
+      }
     },
     "Church": {
       "title": "Church",
