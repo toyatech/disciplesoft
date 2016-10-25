@@ -2,9 +2,8 @@
   "title": "DiscipleSoft",
   "description": "App to help churches make disciples.",
   "definitions": {
-    "Association": {
-      "title": "Association",
-      "description": "An association of churches (i.e convention, diocese, parish, conference, etc...).",
+    "Church": {
+      "title": "Church",
       "type": "object",
       "properties": {
         "id": {
@@ -19,137 +18,64 @@
         },
         "address": {
           "$ref": "#/definitions/PostalAddress"
-        },
-        "associations": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Association"
-          }
-        },
-        "churches": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Church"
-          }
-        }
-      },
-      "required": [ 
-        "name" 
-      ],
-      "links": [
-        {
-          "description": "Retrieves a list of associations.",
-          "href": "/associations",
-          "method": "GET"
-        },
-        {
-          "description": "Retrieves a specific association.",
-          "href": "/associations/{associationId}",
-          "method": "GET"
-        },
-        {
-          "description": "Creates a new association.",
-          "href": "/associations",
-          "method": "POST"
-        },
-        {
-          "description": "Updates a specific association.",
-          "href": "/associations/{associationId}",
-          "method": "PUT"
-        },
-        {
-          "description": "Modify a specific association.",
-          "href": "/associations/{associationId}",
-          "method": "PATCH"
-        },
-        {
-          "description": "Remove a specific association.",
-          "href": "/associations/{associationId}",
-          "method": "DELETE"
-        },
-        {
-          "rel": "associations",
-          "description": "Retrieves a list sub-associations.",
-          "href": "/associations?associations={associationId}",
-          "method": "GET"
-        },
-        {
-          "rel": "churches",
-          "description": "Retrieves a list of associated churches.",
-          "href": "/churches?
-        }
-      ]
-    },
-    "MemberAssociation": {
-      "title": "MemberAssociation",
-      "type": "object",
-      "properties": {
-      }
-    },
-    "MemberChurch": {
-      "title": "MemberChurch",
-      "type": "object",
-      "properties": {
-      }
-    },
-    "Church": {
-      "title": "Church",
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "description": {
-          "type": "string"
-        },
-        "address": {
-          "$ref": "#/definitions/PostalAddress"
-        },
-        "association": {
-        },
-        "families": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Family"
-          }
-        },
-        "people": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Person"
-          }
         }
       },
       "links": [
         {
+          "rel": "self",
+          "title": "getChurches",
           "description": "Retrieves a list of church.",
           "href": "/churches",
           "method": "GET"
         },
         {
+          "rel": "self",
+          "title": "getChurch",
           "description": "Retrieves a specific church.",
-          "href": "/churches/{churchId}",
+          "href": "/churches/{id}",
           "method": "GET"
         },
         {
+          "rel": "self",
+          "title": "newChurch",
           "description": "Creates a new church.",
           "href": "/churches",
           "method": "POST"
         },
         {
+          "rel": "self",
+          "title": "updateChurch",
           "description": "Updates a specific church.",
-          "href": "/churches/{churchId}",
+          "href": "/churches/{id}",
           "method": "PUT"
         },
         {
+          "rel": "self",
+          "title": "changeChurch",
           "description": "Modify a specific church.",
-          "href": "/churches/{churchId}",
+          "href": "/churches/{id}",
           "method": "PATCH"
+        },/s
+        {
+          "rel": "self",
+          "title": "removeChurch",
+          "description": "Remove a specific church.",
+          "href": "/churches/{id}",
+          "method": "DELETE"
         },
         {
-          "description": "Remove a specific church.",
-          "href": "/churches/{churchId}",
-          "method": "DELETE"
+          "rel": "families",
+          "title": "getFamilies",
+          "desciption": "Retrieves a list of families in this church.",
+          "href": "/churches/{id}/families",
+          "method": "GET"
+        },
+        {
+          "rel": "people",
+          "title": "getPeople",
+          "description": "Retrieves a list of people in this church.",
+          "href": "/churches/{id}/people",
+          "method": "GET"
         }
       ]
     },
@@ -157,19 +83,31 @@
       "title": "Family",
       "type": "object",
       "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
         "name": {
           "type": "string"
         },
         "address": {
           "$ref": "#/definitions/PostalAddress"
-        },
-        "members": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/FamilyMember"
+        }
+      },
+      "links": [
+        {
+          "rel": "members",
+          "description": "Retrieves a list of family members.",
+          "href": "/families/{id}/members",
+          "method": "GET",
+          "targetSchema": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/FamilyMember"
+            }
           }
         }
-      }
+      ]
     },
     "FamilyMember": {
       "title": "FamilyMember",
