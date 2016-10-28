@@ -4,12 +4,9 @@
   "definitions": {
     "Church": {
       "title": "Church",
+      "description": "A group of families and people join together to form a church.",
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "uuid"
-        },
         "name": {
           "type": "string"
         },
@@ -23,70 +20,94 @@
       "links": [
         {
           "rel": "self",
-          "title": "getChurches",
           "description": "Retrieves a list of church.",
           "href": "/churches",
           "method": "GET"
         },
         {
           "rel": "self",
-          "title": "getChurch",
           "description": "Retrieves a specific church.",
           "href": "/churches/{id}",
           "method": "GET"
         },
         {
           "rel": "self",
-          "title": "newChurch",
           "description": "Creates a new church.",
           "href": "/churches",
           "method": "POST"
         },
         {
           "rel": "self",
-          "title": "updateChurch",
           "description": "Updates a specific church.",
           "href": "/churches/{id}",
           "method": "PUT"
         },
         {
           "rel": "self",
-          "title": "changeChurch",
           "description": "Modify a specific church.",
           "href": "/churches/{id}",
           "method": "PATCH"
         },
         {
           "rel": "self",
-          "title": "removeChurch",
           "description": "Remove a specific church.",
           "href": "/churches/{id}",
           "method": "DELETE"
         },
         {
           "rel": "families",
-          "title": "getFamilies",
           "desciption": "Retrieves a list of families in this church.",
           "href": "/churches/{id}/families",
-          "method": "GET"
+          "method": "GET",
+          "targetSchema": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Family"
+            }
+          }
         },
         {
           "rel": "people",
-          "title": "getPeople",
           "description": "Retrieves a list of people in this church.",
           "href": "/churches/{id}/people",
-          "method": "GET"
+          "method": "GET",
+          "targetSchema": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/People"
+            }
+          }
         }
       ]
     },
     "Family": {
       "title": "Family",
+      "description": "A group of people who form a household.",
+      "definitions": {
+        "FamilyMember": {
+          "title": "FamilyMember",
+          "type": "object",
+          "links": [
+            {
+              "rel": "self",
+              "description": "Retrieves a specific family member.",
+              "href": "/families/{id}/members/{personId}",
+              "method": "GET",
+              "targetSchema": {
+                "$ref": "#/definitions/Family/definitions/FamilyMember"
+              }
+            },
+            {
+              "rel": "person",
+              "description": "Retrieves basic information about this family member.",
+              "href": "/people/{personId}?properties=formattedName",
+              "method": "GET",
+              
+          ]
+        }
+      },
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "uuid"
-        },
         "name": {
           "type": "string"
         },
@@ -108,18 +129,6 @@
           }
         }
       ]
-    },
-    "FamilyMember": {
-      "title": "FamilyMember",
-      "type": "object",
-      "properties": {
-        "person": {
-          "$ref": "#/definitions/Person"
-        },
-        "role": {
-          "$ref": "#/definitions/FamilyRole"
-        }
-      }
     },
     "Person": {
       "title": "Person",
