@@ -55,7 +55,7 @@
           "description": "Modify a specific church.",
           "href": "/churches/{id}",
           "method": "PATCH"
-        },/s
+        },
         {
           "rel": "self",
           "title": "removeChurch",
