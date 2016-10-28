@@ -29,7 +29,7 @@
         },
         "address": {
           "$ref": "#/definitions/PostalAddress"
-        }
+        },
         "familyRoles": {
           "type": "object",
           "patternProperties": {
@@ -87,8 +87,8 @@
               "rel": "person",
               "description": "Retrieves basic information about this family member.",
               "href": "/people/{personId}?properties=formattedName",
-              "method": "GET",
-              
+              "method": "GET"
+            } 
           ]
         }
       },
