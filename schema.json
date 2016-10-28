@@ -5,6 +5,20 @@
     "Church": {
       "title": "Church",
       "description": "A group of families and people join together to form a church.",
+      "definitions": {
+        "FamilyRole": {
+          "title": "FamilyRole",
+          "description": "The role of a family member within the family (i.e. Head of Household, Spouse, Child, etc...).",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "description": {
+              "thpe": "string"
+            }
+          }
+        }
+      },
       "type": "object",
       "properties": {
         "name": {
@@ -16,48 +30,20 @@
         "address": {
           "$ref": "#/definitions/PostalAddress"
         }
+        "familyRoles": {
+          "type": "object",
+          "patternProperties": {
+            "^[a-f0-9]{8}-?[a-f0-9]{4}-?[1-5][a-f0-9]{3}-?[89ab][a-f0-9]{3}-?[a-f0-9]{12}$": {
+              "$ref": "#/definitions/Church/definitions/FamilyRole"
+            }
+          }
+        }
       },
       "links": [
         {
-          "rel": "self",
-          "description": "Retrieves a list of church.",
-          "href": "/churches",
-          "method": "GET"
-        },
-        {
-          "rel": "self",
-          "description": "Retrieves a specific church.",
-          "href": "/churches/{id}",
-          "method": "GET"
-        },
-        {
-          "rel": "self",
-          "description": "Creates a new church.",
-          "href": "/churches",
-          "method": "POST"
-        },
-        {
-          "rel": "self",
-          "description": "Updates a specific church.",
-          "href": "/churches/{id}",
-          "method": "PUT"
-        },
-        {
-          "rel": "self",
-          "description": "Modify a specific church.",
-          "href": "/churches/{id}",
-          "method": "PATCH"
-        },
-        {
-          "rel": "self",
-          "description": "Remove a specific church.",
-          "href": "/churches/{id}",
-          "method": "DELETE"
-        },
-        {
           "rel": "families",
           "desciption": "Retrieves a list of families in this church.",
-          "href": "/churches/{id}/families",
+          "href": "/families",
           "method": "GET",
           "targetSchema": {
             "type": "array",
@@ -69,7 +55,7 @@
         {
           "rel": "people",
           "description": "Retrieves a list of people in this church.",
-          "href": "/churches/{id}/people",
+          "href": "/people",
           "method": "GET",
           "targetSchema": {
             "type": "array",
